@@ -10,6 +10,8 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.PropertyValuesHolder;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
@@ -32,7 +34,7 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
     private ArrayList<Translation> mLocations;
 
 
-    private static final float INTERPOLATOR_WEIGHT = 2.5f;
+    private static final float INTERPOLATOR_WEIGHT = 2.0f;
     private boolean mAnimating;
     private boolean mExpanded = true;
     private SJToggleMenuOverlay.OnItemClickListener listener;
@@ -160,8 +162,7 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
             int TRANSLATION_Y = mLocations.get(i).getY();
             int TRANSLATION_X = mLocations.get(i).getX();
             ViewPropertyAnimator.animate(mChildViews.get(i)).setDuration(OPEN_DURATION).
-                    translationYBy(TRANSLATION_Y).translationXBy(TRANSLATION_X).setInterpolator(anticipation).setListener(ON_EXPAND_COLLAPSE_LISTENER);
-            ViewPropertyAnimator.animate(mChildViews.get(i)).alpha(1.0f).setDuration(OPEN_DURATION).start();
+                    translationYBy(TRANSLATION_Y).translationXBy(TRANSLATION_X).alpha(1.0f).setInterpolator(overshoot).setListener(ON_EXPAND_COLLAPSE_LISTENER);
         }
         ViewPropertyAnimator.animate(mCloseButton).rotation(45).setDuration(OPEN_DURATION).start();
     }
@@ -171,8 +172,7 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
             int TRANSLATION_Y = mLocations.get(i).getY();
             int TRANSLATION_X = mLocations.get(i).getX();
             ViewPropertyAnimator.animate(mChildViews.get(i)).setDuration(OPEN_DURATION).
-                    translationYBy(-TRANSLATION_Y).translationXBy(-TRANSLATION_X).setInterpolator(overshoot).setListener(ON_EXPAND_COLLAPSE_LISTENER);
-            ViewPropertyAnimator.animate(mChildViews.get(i)).alpha(0.0f).setDuration(OPEN_DURATION).start();
+                    translationYBy(-TRANSLATION_Y).translationXBy(-TRANSLATION_X).alpha(0.0f).setInterpolator(anticipation).setListener(ON_EXPAND_COLLAPSE_LISTENER);
         }
         ViewPropertyAnimator.animate(mCloseButton).rotation(-90).setDuration(OPEN_DURATION).start();
     }
