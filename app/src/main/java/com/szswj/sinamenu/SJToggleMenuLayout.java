@@ -1,8 +1,13 @@
 package com.szswj.sinamenu;
 
 import android.content.Context;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnticipateInterpolator;
@@ -10,6 +15,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.PropertyValuesHolder;
 import com.nineoldandroids.view.ViewHelper;
@@ -23,7 +29,7 @@ import java.util.ArrayList;
  */
 public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListener {
     private static final String tag = "SJToggleMenuLayout";
-    private static final int MARGIN_BOTTOM = 200;
+    private static final int MARGIN_BOTTOM = 150;
     private static final long OPEN_DURATION = 500;
     private final AnticipateInterpolator anticipation;
     private final OvershootInterpolator overshoot;
@@ -83,6 +89,7 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
         mChildViews = new ArrayList<>();
         for (int i = 1; i < num; i++) {
             View childView = getChildAt(i);
+            childView.setOnTouchListener(new ViewOnTouchListener());
             mChildViews.add(childView);
             childView.setOnClickListener(this);
         }
@@ -137,7 +144,7 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
                 marginY = childSize;
 
                 nL = marginX + col * (childSize + marginX);
-                nT = b - MARGIN_BOTTOM - mCloseButton.getMeasuredWidth() - 2 * childSize - row * (childSize + marginY);
+                nT = (int) (b - MARGIN_BOTTOM - mCloseButton.getMeasuredWidth() - 2 * childSize - row * (2*childSize*0.8f));
                 childView.layout(nL, nT, nL + childSize, nT + childSize);
 
                 Translation tt = new Translation(nL - ct.getX(), nT - ct.getY());
@@ -183,13 +190,14 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
         }
     }
 
+
+
     @Override
     public void onClick(View v) {
-        if (mCloseButton == v) {
-            toggle();
-        }else {
-            if (listener!=null) listener.onItemClick(v);
+        if (mCloseButton != v) {
+            if (listener != null) listener.onItemClick(v);
         }
+       toggle();
     }
 
     /**
@@ -289,5 +297,33 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
         }
     }
 
+    private class ViewOnTouchListener implements OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    setBackgroundDark(v);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    setBackgroundLight(v);
+                    break;
+            }
+            return false;
+        }
+    }
 
+
+    private void setBackgroundDark(View v) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            v.setAlpha(0.7f);
+        }
+
+    }
+
+    private void setBackgroundLight(View v) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            v.setAlpha(1.0f);
+        }
+    }
 }
