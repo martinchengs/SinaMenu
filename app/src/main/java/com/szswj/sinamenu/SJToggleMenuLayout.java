@@ -2,6 +2,7 @@ package com.szswj.sinamenu;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnticipateInterpolator;
@@ -112,7 +113,7 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
                             columnCount = 2;
                             if (i == 2) {
                                 row = 1;
-                                col = 2;
+                                col = 0;
                                 columnCount = 3;
                             } else {
                                 row = i / columnCount;
@@ -121,7 +122,7 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
                         } else {
                             columnCount = 3;
                             row = i / columnCount;
-                            col = i % columnCount;
+                            col = i % columnCount+1;
                         }
                         break;
                     default:
@@ -184,20 +185,11 @@ public class SJToggleMenuLayout extends ViewGroup implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-       switch (v.getId()) {
-           case R.id.id_toggle_menu_close:
-               toggle();
-               break;
-           case R.id.id_toggle_menu_1:
-           case R.id.id_toggle_menu_2:
-           case R.id.id_toggle_menu_3:
-           case R.id.id_toggle_menu_4:
-           case R.id.id_toggle_menu_5:
-           case R.id.id_toggle_menu_6:
-               Toast.makeText(getContext(),"点击我干什么",1).show();
-               if (listener!=null) listener.onItemClick(v);
-               break;
-       }
+        if (mCloseButton == v) {
+            toggle();
+        }else {
+            if (listener!=null) listener.onItemClick(v);
+        }
     }
 
     /**

@@ -58,6 +58,7 @@ public class SJToggleMenuOverlay extends ImageButton implements DialogInterface.
             @Override
             public void onShow(DialogInterface dialogInterface) {
                mToggleMenu.onShowing();
+                mDismissing = false;
             }
         });
 

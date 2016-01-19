@@ -13,6 +13,7 @@
     tools:showIn="@layout/activity_main">
 
     <com.szswj.sinamenu.SJToggleMenuOverlay
+        android:id="@+id/menuOverlay"
         android:layout_width="60dp"
         android:layout_height="60dp"
         app:menuLayout="@layout/layout_toggle_menu"
