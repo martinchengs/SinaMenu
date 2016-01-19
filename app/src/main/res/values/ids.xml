@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="id_toggle_menu_close" type="id"/>
+  <item name="id_toggle_menu_1" type="id"/>
+  <item name="id_toggle_menu_2" type="id"/>
+  <item name="id_toggle_menu_3" type="id"/>
+  <item name="id_toggle_menu_4" type="id"/>
+  <item name="id_toggle_menu_5" type="id"/>
+  <item name="id_toggle_menu_6" type="id"/>
+</resources>
