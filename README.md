@@ -4,7 +4,7 @@
 </br>
 </br>
 # 同时支持2-6个按钮(包括文字的效果)
-*项目借鉴了[ExpandButton](https://github.com/lemonlabs/ExpandableButtonMenu)*,更加灵活多变
+特别感谢*[ExpandButton](https://github.com/lemonlabs/ExpandableButtonMenu)*
 
 
 
